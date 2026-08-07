@@ -19,6 +19,14 @@ RSpec.describe "Discourse Static Site" do
     expect(response.status).to eq(404)
   end
 
+  it "serves the static site admin page from its deep link" do
+    sign_in(admin)
+
+    get "/admin/plugins/discourse-static-site/static-sites"
+
+    expect(response.status).to eq(200)
+  end
+
   it "stores the token encrypted and never returns it" do
     sign_in(admin)
 

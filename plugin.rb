@@ -27,6 +27,9 @@ after_initialize do
   Rails.application.config.filter_parameters.concat(%i[repository_url token])
 
   Discourse::Application.routes.append do
+    get "/admin/plugins/discourse-static-site/static-sites" => "admin/plugins#show",
+        constraints: AdminConstraint.new,
+        defaults: { plugin_id: "discourse-static-site" }
     get "/pages/:slug" => "discourse_static_site/pages#show"
     mount ::DiscourseStaticSite::Engine, at: "/static-sites"
   end
