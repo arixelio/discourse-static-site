@@ -45,7 +45,13 @@ RSpec.describe "Discourse Static Site" do
       FileUtils.mkdir_p(deployment.deployed_path)
       File.write(
         deployment.deployed_path.join("index.html"),
-        "<html><head></head><body>Docs</body></html>",
+        '<html><head><script type="module" src="/assets/app.js"></script></head>' \
+          '<body><a href="/guide">Docs</a></body></html>',
+      )
+      FileUtils.mkdir_p(deployment.deployed_path.join("assets"))
+      File.write(
+        deployment.deployed_path.join("assets/app.js"),
+        'const logo = "/assets/logo.svg";',
       )
 
       get "/static-sites/content/docs/"
@@ -53,6 +59,13 @@ RSpec.describe "Discourse Static Site" do
       expect(response.status).to eq(200)
       expect(response.headers["Content-Security-Policy"]).to include("sandbox allow-scripts")
       expect(response.body).to include("discourse-static-site:height")
+      expect(response.body).to include('src="/static-sites/content/docs/assets/app.js"')
+      expect(response.body).to include('href="/static-sites/content/docs/guide"')
+
+      get "/static-sites/content/docs/assets/app.js"
+
+      expect(response.media_type).to eq("text/javascript")
+      expect(response.body).to include('"/static-sites/content/docs/assets/logo.svg"')
     end
   end
 

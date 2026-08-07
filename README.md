@@ -12,9 +12,10 @@ the site runs in a sandboxed, automatically-sized iframe.
    URLs may use `https://<token>@host/owner/repo.git`.
 4. Click **Deploy**, then **Refresh** to see the background job result.
 
-The repository root must contain `index.html`, use relative asset URLs, contain
-no symlinks, and stay within the configured size limit after checkout. Missing
-paths fall back to `index.html` for SPA routing.
+The repository root must contain `index.html`, contain no symlinks, and stay
+within the configured size limit after checkout. Root-relative asset and route
+URLs are automatically scoped to the deployed site. Missing paths fall back to
+`index.html` for SPA routing.
 
 ## Scope
 
