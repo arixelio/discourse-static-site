@@ -34,7 +34,7 @@ module DiscourseStaticSite
       requested = root.join(relative).cleanpath
       raise Discourse::NotFound unless requested.to_s.start_with?("#{root}/")
       requested = requested.join("index.html") if requested.directory?
-      requested = root.join("index.html") unless requested.file?
+      requested = root.join("index.html") unless requested.file? || File.extname(relative).present?
       raise Discourse::NotFound unless requested.file?
 
       response.headers["Access-Control-Allow-Origin"] = "*"
@@ -77,7 +77,7 @@ module DiscourseStaticSite
 
     def mount_root_paths(content, base)
       content
-        .gsub(/(["'`])\/(?!\/)/) { "#{Regexp.last_match(1)}#{base}" }
+        .gsub(/(["'`])\/(?![\/>$&])/) { "#{Regexp.last_match(1)}#{base}" }
         .gsub("url(/", "url(#{base}")
     end
   end

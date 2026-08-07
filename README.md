@@ -15,7 +15,7 @@ the site runs in a sandboxed, automatically-sized iframe.
 The repository root must contain `index.html`, contain no symlinks, and stay
 within the configured size limit after checkout. Root-relative asset and route
 URLs are automatically scoped to the deployed site. Missing paths fall back to
-`index.html` for SPA routing.
+`index.html` for SPA routing only when the path has no file extension.
 
 ## Scope
 

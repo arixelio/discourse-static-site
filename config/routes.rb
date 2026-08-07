@@ -7,6 +7,6 @@ DiscourseStaticSite::Engine.routes.draw do
     end
   end
 
-  get "/content/:slug" => "content#show"
-  get "/content/:slug/*path" => "content#show"
+  get "/content/:slug" => "content#show", format: false
+  get "/content/:slug/*path" => "content#show", format: false
 end
