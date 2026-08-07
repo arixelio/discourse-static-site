@@ -59,6 +59,7 @@ RSpec.describe "Discourse Static Site" do
 
       expect(response.status).to eq(200)
       expect(response.headers["Content-Security-Policy"]).to include("sandbox allow-scripts")
+      expect(response.headers["Cache-Control"]).to include("no-transform")
       expect(response.body).to include("discourse-static-site:height")
       expect(response.body).to include('src="/static-sites/content/docs/assets/app.js"')
       expect(response.body).to include('href="/static-sites/content/docs/guide"')

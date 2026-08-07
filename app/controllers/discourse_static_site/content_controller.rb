@@ -44,6 +44,7 @@ module DiscourseStaticSite
 
       type = Rack::Mime.mime_type(requested.extname, "application/octet-stream")
       if type == "text/html"
+        response.headers["Cache-Control"] = "no-cache, no-transform"
         response.headers["Content-Security-Policy"] =
           "sandbox allow-scripts allow-popups allow-popups-to-escape-sandbox; " \
             "default-src 'self' https: data: blob:; " \
