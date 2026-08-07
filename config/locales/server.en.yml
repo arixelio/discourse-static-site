@@ -1,3 +1,4 @@
 en:
   site_settings:
     discourse_static_site_enabled: "Enable static site deployments"
+    discourse_static_site_max_size_mb: "Maximum deployed site size in megabytes"

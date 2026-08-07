@@ -14,41 +14,24 @@ body.discourse-static-site-page #main-outlet {
   border: 0;
 }
 
-.static-sites-admin__header,
-.static-sites-admin__list article,
 .static-sites-admin__actions {
   display: flex;
   gap: 0.75em;
-  align-items: flex-start;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .static-sites-admin__form {
-  display: grid;
   max-width: 50em;
-  gap: 1em;
-  padding: 1em 0;
-
-  label,
-  input {
-    display: block;
-    width: 100%;
-  }
 }
 
-.static-sites-admin__list article {
-  padding: 1em 0;
-  border-top: 1px solid var(--primary-low);
+.static-sites-admin__repository {
+  color: var(--primary-medium);
+  overflow-wrap: anywhere;
+}
 
-  h3,
-  p {
-    margin: 0 0 0.5em;
-  }
-
-  pre {
-    max-width: 60em;
-    overflow: auto;
-    color: var(--danger);
-    white-space: pre-wrap;
-  }
+.static-sites-admin__error {
+  max-width: 40em;
+  overflow: auto;
+  color: var(--danger);
+  white-space: pre-wrap;
 }

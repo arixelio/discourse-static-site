@@ -23,3 +23,8 @@ en:
         commit: "Commit"
         deployed_at: "Deployed at"
         error: "Last error"
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_static_site: "Static sites"

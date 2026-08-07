@@ -1,0 +1,30 @@
+zh_CN:
+  js:
+    discourse_static_site:
+      admin:
+        title: "静态站点"
+        description: "从 HTTPS Git 仓库部署已构建的静态站点。"
+        new: "新建站点"
+        refresh: "刷新"
+        save: "保存"
+        cancel: "取消"
+        edit: "编辑"
+        deploy: "部署"
+        delete: "删除"
+        confirm_delete: "删除此站点及其已部署文件？"
+        empty: "尚未配置静态站点。"
+        name: "显示名称"
+        slug: "路由别名"
+        repository_url: "HTTPS 仓库地址"
+        repository_hint: "可输入 https://<token>@host/owner/repo.git。令牌将加密存储且不会返回。"
+        branch: "分支"
+        route: "路由"
+        status: "状态"
+        commit: "提交"
+        deployed_at: "部署时间"
+        error: "最近一次错误"
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_static_site: "静态站点"

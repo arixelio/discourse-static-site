@@ -74,13 +74,14 @@ module Jobs
       raise "Repository root must contain index.html" unless File.file?(index)
 
       bytes = 0
+      max_size_mb = SiteSetting.discourse_static_site_max_size_mb
       Find.find(checkout) do |path|
         stat = File.lstat(path)
         raise "Symbolic links are not allowed" if stat.symlink?
         next unless stat.file?
 
         bytes += stat.size
-        raise "Deployed files exceed the 50MB limit" if bytes > DiscourseStaticSite::MAX_BYTES
+        raise "Deployed files exceed the #{max_size_mb}MB limit" if bytes > max_size_mb.megabytes
       end
     end
 

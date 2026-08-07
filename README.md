@@ -13,8 +13,8 @@ the site runs in a sandboxed, automatically-sized iframe.
 4. Click **Deploy**, then **Refresh** to see the background job result.
 
 The repository root must contain `index.html`, use relative asset URLs, contain
-no symlinks, and be no larger than 50MB after checkout. Missing paths fall back
-to `index.html` for SPA routing.
+no symlinks, and stay within the configured size limit after checkout. Missing
+paths fall back to `index.html` for SPA routing.
 
 ## Scope
 

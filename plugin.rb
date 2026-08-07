@@ -10,6 +10,8 @@
 enabled_site_setting :discourse_static_site_enabled
 register_asset "stylesheets/common/static-site.scss"
 register_svg_icon "globe"
+register_svg_icon "arrows-rotate"
+register_svg_icon "rocket"
 add_admin_route "discourse_static_site.admin.title",
                 "discourse-static-site",
                 use_new_show_route: true
@@ -26,8 +28,6 @@ after_initialize do
 
   Discourse::Application.routes.append do
     get "/pages/:slug" => "discourse_static_site/pages#show"
-    get "/admin/plugins/discourse-static-site/static-sites" => "admin/plugins#index",
-        constraints: AdminConstraint.new
     mount ::DiscourseStaticSite::Engine, at: "/static-sites"
   end
 end

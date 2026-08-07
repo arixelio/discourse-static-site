@@ -12,4 +12,16 @@ RSpec.describe "Core features" do
   before { enable_current_plugin }
 
   it_behaves_like "having working core features"
+
+  fab!(:admin)
+
+  it "opens static site management from the plugin settings button" do
+    sign_in(admin)
+    visit "/admin/plugins"
+
+    find('[data-plugin-setting-button="discourse-static-site"]').click
+
+    expect(page).to have_current_path("/admin/plugins/discourse-static-site/static-sites")
+    expect(page).to have_css(".static-sites-admin")
+  end
 end

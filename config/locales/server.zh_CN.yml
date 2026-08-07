@@ -1,0 +1,4 @@
+zh_CN:
+  site_settings:
+    discourse_static_site_enabled: "启用静态站点部署"
+    discourse_static_site_max_size_mb: "部署后静态站点的最大大小（MB）"

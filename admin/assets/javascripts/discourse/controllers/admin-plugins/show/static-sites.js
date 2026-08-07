@@ -19,7 +19,6 @@ export default class AdminPluginsShowStaticSitesController extends Controller {
   @tracked sites = [];
   @tracked form = emptyForm();
   @tracked editingId = null;
-  @tracked saving = false;
 
   @action
   newSite() {
@@ -45,14 +44,7 @@ export default class AdminPluginsShowStaticSitesController extends Controller {
   }
 
   @action
-  updateField(field, event) {
-    this.form = { ...this.form, [field]: event.target.value };
-  }
-
-  @action
-  async save(event) {
-    event.preventDefault();
-    this.saving = true;
+  async save(form) {
     try {
       const creating = this.editingId === "new";
       const path = creating
@@ -60,7 +52,7 @@ export default class AdminPluginsShowStaticSitesController extends Controller {
         : `/static-sites/admin/deployments/${this.editingId}.json`;
       const result = await ajax(path, {
         type: creating ? "POST" : "PUT",
-        data: { deployment: this.form },
+        data: { deployment: form },
       });
       this.sites = creating
         ? [...this.sites, result.deployment].sort((a, b) =>
@@ -72,8 +64,6 @@ export default class AdminPluginsShowStaticSitesController extends Controller {
       this.cancel();
     } catch (error) {
       popupAjaxError(error);
-    } finally {
-      this.saving = false;
     }
   }
 

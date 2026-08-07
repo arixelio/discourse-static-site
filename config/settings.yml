@@ -2,3 +2,7 @@ discourse_static_site:
   discourse_static_site_enabled:
     default: false
     client: true
+  discourse_static_site_max_size_mb:
+    default: 50
+    min: 1
+    max: 1024
