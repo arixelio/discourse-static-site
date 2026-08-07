@@ -47,12 +47,13 @@ RSpec.describe "Discourse Static Site" do
         deployment.deployed_path.join("index.html"),
         '<html><head><meta name="viewport" content="width=device-width"/>' \
           '<script type="module" src="/assets/app.js"></script></head>' \
-          '<body><a href="/guide">Docs</a><script>const marker = "/$";</script></body></html>',
+          '<body><a href="/">Home</a><a href="/guide">Docs</a>' \
+          '<script>const marker = "/$";</script></body></html>',
       )
       FileUtils.mkdir_p(deployment.deployed_path.join("assets"))
       File.write(
         deployment.deployed_path.join("assets/app.js"),
-        'const logo = "/assets/logo.svg";',
+        'const basename = "/"; const logo = "/assets/logo.svg";',
       )
 
       get "/static-sites/content/docs/"
@@ -62,6 +63,7 @@ RSpec.describe "Discourse Static Site" do
       expect(response.headers["Cache-Control"]).to include("no-transform")
       expect(response.body).to include("discourse-static-site:height")
       expect(response.body).to include('src="/static-sites/content/docs/assets/app.js"')
+      expect(response.body).to include('href="/static-sites/content/docs/"')
       expect(response.body).to include('href="/static-sites/content/docs/guide"')
       expect(response.body).to include('content="width=device-width"/>')
       expect(response.body).to include('marker = "/$"')
@@ -71,6 +73,7 @@ RSpec.describe "Discourse Static Site" do
       expect(response.status).to eq(200)
       expect(response.media_type).to eq("text/javascript")
       expect(response.headers["Access-Control-Allow-Origin"]).to eq("*")
+      expect(response.body).to include('basename = "/"')
       expect(response.body).to include('"/static-sites/content/docs/assets/logo.svg"')
 
       get "/static-sites/content/docs/assets/missing.js"

@@ -61,7 +61,7 @@ module DiscourseStaticSite
           end
         send_data html, type: type, disposition: "inline"
       elsif MOUNTED_TEXT_EXTENSIONS.include?(requested.extname)
-        send_data mount_root_paths(requested.read, content_base(deployment)),
+        send_data mount_root_paths(requested.read, content_base(deployment), rewrite_root: false),
                   type: type,
                   disposition: "inline"
       else
@@ -77,9 +77,10 @@ module DiscourseStaticSite
       "/static-sites/content/#{deployment.slug}/"
     end
 
-    def mount_root_paths(content, base)
+    def mount_root_paths(content, base, rewrite_root: true)
+      pattern = rewrite_root ? /(["'`])\/(?![\/>$&])/ : /(["'`])\/(?![\/>$&"'`])/
       content
-        .gsub(/(["'`])\/(?![\/>$&])/) { "#{Regexp.last_match(1)}#{base}" }
+        .gsub(pattern) { "#{Regexp.last_match(1)}#{base}" }
         .gsub("url(/", "url(#{base}")
     end
   end
