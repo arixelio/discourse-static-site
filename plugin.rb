@@ -5,7 +5,7 @@
 # version: 0.0.1
 # authors: thehrz
 # url: https://github.com/thehrz/discourse-static-site
-# required_version: 2026.8.0
+# required_version: 2.7.0
 
 enabled_site_setting :discourse_static_site_enabled
 register_asset "stylesheets/common/static-site.scss"
