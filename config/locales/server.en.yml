@@ -1,0 +1,3 @@
+en:
+  site_settings:
+    discourse_static_site_enabled: "Enable static site deployments"

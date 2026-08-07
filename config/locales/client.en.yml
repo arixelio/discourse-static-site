@@ -1,0 +1,25 @@
+en:
+  js:
+    discourse_static_site:
+      admin:
+        title: "Static sites"
+        description: "Deploy built static sites from HTTPS Git repositories."
+        new: "New site"
+        refresh: "Refresh"
+        save: "Save"
+        cancel: "Cancel"
+        edit: "Edit"
+        deploy: "Deploy"
+        delete: "Delete"
+        confirm_delete: "Delete this site and its deployed files?"
+        empty: "No static sites configured."
+        name: "Display name"
+        slug: "Route slug"
+        repository_url: "HTTPS repository URL"
+        repository_hint: "You may enter https://<token>@host/owner/repo.git. The token is stored encrypted and never returned."
+        branch: "Branch"
+        route: "Route"
+        status: "Status"
+        commit: "Commit"
+        deployed_at: "Deployed at"
+        error: "Last error"

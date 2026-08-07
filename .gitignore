@@ -1,0 +1,7 @@
+node_modules
+/gems
+/auto_generated
+.eslintcache
+.agents
+.claude
+skills-lock.json

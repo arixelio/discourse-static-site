@@ -1,0 +1,4 @@
+discourse_static_site:
+  discourse_static_site_enabled:
+    default: false
+    client: true

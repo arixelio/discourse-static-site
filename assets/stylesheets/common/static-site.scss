@@ -1,0 +1,54 @@
+body.discourse-static-site-page #main-outlet {
+  width: 100%;
+  max-width: none;
+}
+
+.static-site-page,
+.static-site-frame {
+  width: 100%;
+}
+
+.static-site-frame {
+  display: block;
+  min-height: 400px;
+  border: 0;
+}
+
+.static-sites-admin__header,
+.static-sites-admin__list article,
+.static-sites-admin__actions {
+  display: flex;
+  gap: 0.75em;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.static-sites-admin__form {
+  display: grid;
+  max-width: 50em;
+  gap: 1em;
+  padding: 1em 0;
+
+  label,
+  input {
+    display: block;
+    width: 100%;
+  }
+}
+
+.static-sites-admin__list article {
+  padding: 1em 0;
+  border-top: 1px solid var(--primary-low);
+
+  h3,
+  p {
+    margin: 0 0 0.5em;
+  }
+
+  pre {
+    max-width: 60em;
+    overflow: auto;
+    color: var(--danger);
+    white-space: pre-wrap;
+  }
+}

@@ -1,0 +1,64 @@
+# frozen_string_literal: true
+
+module DiscourseStaticSite
+  class ContentController < ::ApplicationController
+    requires_plugin PLUGIN_NAME
+    skip_before_action :check_xhr
+
+    HEIGHT_BRIDGE = <<~HTML.squish.freeze
+      <script>(() => {
+        const send = () => requestAnimationFrame(() => parent.postMessage({
+          type: "discourse-static-site:height",
+          height: Math.max(document.documentElement.scrollHeight, document.body?.scrollHeight || 0)
+        }, "*"));
+        new ResizeObserver(send).observe(document.documentElement);
+        addEventListener("load", send);
+        send();
+      })()</script>
+    HTML
+
+    def show
+      deployment = Deployment.find_by(slug: params[:slug], status: "deployed")
+      raise Discourse::NotFound if deployment.nil?
+
+      root = deployment.deployed_path.realpath
+      relative = params[:path].presence || "index.html"
+      segments = relative.split("/")
+      hidden_path = segments.any? { |part| part.start_with?(".") }
+      if relative.include?("\0") || relative.include?("\\") || hidden_path
+        raise Discourse::NotFound
+      end
+
+      requested = root.join(relative).cleanpath
+      raise Discourse::NotFound unless requested.to_s.start_with?("#{root}/")
+      requested = requested.join("index.html") if requested.directory?
+      requested = root.join("index.html") unless requested.file?
+      raise Discourse::NotFound unless requested.file?
+
+      response.headers["Access-Control-Allow-Origin"] = "*"
+      response.headers["Cache-Control"] = "no-cache"
+      response.headers["X-Content-Type-Options"] = "nosniff"
+
+      type = Rack::Mime.mime_type(requested.extname, "application/octet-stream")
+      if type == "text/html"
+        response.headers["Content-Security-Policy"] =
+          "sandbox allow-scripts allow-popups allow-popups-to-escape-sandbox; " \
+            "default-src 'self' https: data: blob:; " \
+            "script-src 'self' https: blob: 'unsafe-inline' 'unsafe-eval'; " \
+            "style-src 'self' https: 'unsafe-inline'; connect-src 'self' https:"
+        html = requested.read
+        html =
+          if html.match?(/<head(?:\s[^>]*)?>/i)
+            html.sub(/<head(?:\s[^>]*)?>/i) { |head| "#{head}#{HEIGHT_BRIDGE}" }
+          else
+            "#{HEIGHT_BRIDGE}#{html}"
+          end
+        send_data html, type: type, disposition: "inline"
+      else
+        send_file requested, type: type, disposition: "inline"
+      end
+    rescue Errno::ENOENT
+      raise Discourse::NotFound
+    end
+  end
+end
