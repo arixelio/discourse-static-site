@@ -67,7 +67,9 @@ RSpec.describe "Discourse Static Site" do
 
       get "/static-sites/content/docs/assets/app.js"
 
+      expect(response.status).to eq(200)
       expect(response.media_type).to eq("text/javascript")
+      expect(response.headers["Access-Control-Allow-Origin"]).to eq("*")
       expect(response.body).to include('"/static-sites/content/docs/assets/logo.svg"')
 
       get "/static-sites/content/docs/assets/missing.js"

@@ -4,6 +4,7 @@ module DiscourseStaticSite
   class ContentController < ::ApplicationController
     requires_plugin PLUGIN_NAME
     skip_before_action :check_xhr
+    skip_before_action :verify_authenticity_token
 
     MOUNTED_TEXT_EXTENSIONS = %w[.css .html .js .json .mjs].freeze
 
